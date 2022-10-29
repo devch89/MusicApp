@@ -26,7 +26,7 @@ interface MusicAPI {
     fun getMusicByFilters(
         @Query("term") musicType: String,
         @Query("amp;media") mediaType: String = "music",
-        @Query("amp;entity") entityType: String = "entity",
+        @Query("amp;entity") entityType: String = "song",
         @Query("amp;limit") limitType: Int = 50,
     ): Call<MusicResponse>
 }

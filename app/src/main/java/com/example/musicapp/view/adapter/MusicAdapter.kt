@@ -1,6 +1,7 @@
 package com.example.musicapp.view.adapter
 
-import android.telecom.Call.Details
+
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,25 +9,29 @@ import com.example.musicapp.databinding.MusicItemLayoutBinding
 import com.example.musicapp.model.remote.MusicItem
 import com.squareup.picasso3.Picasso
 
+private const val TAG = "MusicAdapter"
+
 class MusicAdapter(private val dataSet: List<MusicItem>,
-private val openDetails: (MusicItem) -> Unit) :RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
+                   private val openDetails: (MusicItem) -> Unit) :
+    RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
     class MusicViewHolder (private val binding: MusicItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root){
 
-            fun bind(currentElement: MusicItem, openDetails: (MusicItem) -> Unit){
-                binding.root.setOnClickListener(){
-                    openDetails(currentElement)
-                }
-                binding.tvPrice.text = currentElement.trackPrice
-                binding.tvArtistName.text = currentElement.artistName
-                binding.tvSongTitle.text = currentElement.collectionName
-                var imageUrl = currentElement.artwork
-                Picasso.Builder(binding.root.context)
-                    .build()
-                    .load(imageUrl)
-                    .into(binding.ivAlbumCover)
+        fun bind(currentElement: MusicItem, openDetails: (MusicItem) -> Unit){
+            Log.d(TAG, "bind: bind fun before binding.root setOnClickListener")
+            binding.root.setOnClickListener(){
+                openDetails(currentElement)
             }
+            Log.d(TAG, "bind: Bind function")
+            binding.tvPrice.text = currentElement.trackPrice.toString()
+            binding.tvArtistName.text = currentElement.artistName
+            binding.tvSongTitle.text = currentElement.trackName
+            Picasso.Builder(binding.tvArtistName.context)
+                .build()
+                .load(currentElement.artwork.replace("100x100.jpg", "250x250bb.jpg"))
+                .into(binding.ivAlbumCover)
+        }
 
     }
 
@@ -47,3 +52,4 @@ private val openDetails: (MusicItem) -> Unit) :RecyclerView.Adapter<MusicAdapter
     }
 
 }
+

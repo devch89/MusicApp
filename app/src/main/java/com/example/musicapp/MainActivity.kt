@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.musicapp.R.id.nav_fragment
+import com.example.musicapp.R.id.*
 import com.example.musicapp.model.remote.MusicNetwork
 import com.example.musicapp.model.remote.MusicResponse
 import com.example.musicapp.view.Communicator
@@ -21,22 +21,22 @@ class MainActivity : AppCompatActivity(), Communicator {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(nav_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        bottomNavigationView.setupWithNavController(navController)
+//        val navHostFragment =
+//            supportFragmentManager.findFragmentById(display_fragment_container) as NavHostFragment
+       // val navController = navHostFragment.navController
+     //   val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+      //  bottomNavigationView.setupWithNavController(navController)
+        doSearch(musicType = "rock")
+
     }
 
-    override fun doSearch(musicType: String, mediaType: String, entityType: String, limitType: Int)
+    override fun doSearch(musicType: String)
     {
-        Log.d(TAG, "changeMusicTab: inside function")
-        MusicNetwork.musicAPI.getMusicByFilters(musicType, mediaType, entityType, limitType)
+        Log.d(TAG, "doSearch: inside function")
+        MusicNetwork.musicAPI.getMusicByFilters(musicType)
             .enqueue(
-
                 object : Callback<MusicResponse> {
-                    override fun onResponse(
-                        call: Call<MusicResponse>,
+                    override fun onResponse(call: Call<MusicResponse>,
                         response: Response<MusicResponse>
                     ) {
                         if (response.isSuccessful) {
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), Communicator {
                             Log.d(TAG, "onResponse: ${response}")
                             val body = response.body()
                             Log.d(TAG, "onResponse: $body")
-                            //createMusicFragment(body)
+                            createDisplayFragment(body)
                         }
                         else{
                             Log.d(TAG, "onResponse: error: $response")
@@ -58,12 +58,14 @@ class MainActivity : AppCompatActivity(), Communicator {
 
             )
     }
-//    private fun createMusicFragment(body: MusicResponse?) {
-//        body?.let {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.display_fragment_container,MusicFragment.newInstance(it)).commit()
-//        }
-//    }
 
+    private fun createDisplayFragment(body: MusicResponse?) {
+        body?.let {
+            supportFragmentManager.beginTransaction()
+              .replace(R.id.display_fragment_container, MusicFragment.newInstance(it)// calls companion object function and gets arguments
+                ) // we remove the layout and add the fragment construct of the new layout. we replace what is in this container with the displayVerticalFragment()
+                .commit()
+
+        }
+    }
 }
-

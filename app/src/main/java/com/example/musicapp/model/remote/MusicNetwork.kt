@@ -1,12 +1,13 @@
 package com.example.musicapp.model.remote
 
+import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.gson.GsonConverterFactory.*
-import retrofit2.create
+
 
 import java.net.URL
 
+private const val TAG = "MusicNetwork"
 object MusicNetwork {
     /*
 1. Create an API interface
@@ -26,17 +27,20 @@ object MusicNetwork {
     // on the second time the value is already initialized so it will just return the value, in this case BookAPI
 
     val musicAPI: MusicAPI by lazy {
+        Log.d(TAG, "retrofit: Music API by lazy retrofit ")
         initRetrofit().create(MusicAPI::class.java)
     }
 
     //4. Create the Retrofit Object
     // we will use the base url
     private fun initRetrofit(): Retrofit {
+        Log.d(TAG, "initRetrofit: Inside retrofit")
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             //we are doing a fetch to the GSONconverter Class
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+        Log.d(TAG, "initRetrofit: end of retrofit")
         return retrofit
     }
 
