@@ -9,17 +9,17 @@
         android:id="@+id/fragment_music_rock"
         android:name="com.example.musicapp.view.MusicFragment"
         android:label="fragment_music_rock"
-        tools:layout="@layout/fragment_music" />
+        tools:layout="@layout/music_fragment_layout" />
 
     <fragment
         android:id="@+id/fragment_music_classic"
         android:name="com.example.musicapp.view.MusicFragment"
         android:label="fragment_music_classic"
-        tools:layout="@layout/fragment_music" />
+        tools:layout="@layout/music_fragment_layout" />
 
     <fragment
         android:id="@+id/fragment_music_pop"
         android:name="com.example.musicapp.view.MusicFragment"
         android:label="fragment_music_pop"
-        tools:layout="@layout/fragment_music" />
+        tools:layout="@layout/music_fragment_layout" />
 </navigation>
