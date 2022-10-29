@@ -10,6 +10,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicapp.MainActivity
 import com.example.musicapp.databinding.DisplayListLayoutBinding
 import com.example.musicapp.databinding.MusicFragmentLayoutBinding
 import com.example.musicapp.model.remote.MusicItem
@@ -77,7 +78,7 @@ class MusicFragment : Fragment() {
         return dataSet.results.map { musicItem -> MusicItem(
             musicItem.artistName,
             musicItem.trackName,
-            musicItem.artwork,
+            musicItem.artworkUrl60,
             musicItem.trackPrice,
             musicItem.currency,
             musicItem.preview
