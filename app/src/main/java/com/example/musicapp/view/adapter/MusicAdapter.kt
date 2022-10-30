@@ -27,7 +27,7 @@ class MusicAdapter(private val dataSet: List<MusicItem>,
             binding.tvPrice.text = currentElement.trackPrice.toString()
             binding.tvArtistName.text = currentElement.artistName
             binding.tvSongTitle.text = currentElement.trackName
-            var imageURL = currentElement.artworkUrl60.replace("100x100.jpg", "250x250bb.jpg")
+            var imageURL = currentElement.artworkUrl60.replace("60x60bb.jpg", "150x150bb.jpg")
 
             if(imageURL==""){
                 Log.d(TAG, "bind: $currentElement.trackName")
@@ -35,8 +35,9 @@ class MusicAdapter(private val dataSet: List<MusicItem>,
             try{
                 Picasso.Builder(binding.tvArtistName.context)
                     .build()
-                    .load(imageURL)
+                    .load(imageURL).resize(150,150)
                     .into(binding.ivAlbumCover)
+
 
             }
             catch (ex:Exception){

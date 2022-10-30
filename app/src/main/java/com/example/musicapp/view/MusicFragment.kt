@@ -1,6 +1,7 @@
 package com.example.musicapp.view
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ class MusicFragment : Fragment() {
     private lateinit var bridge: Communicator
     private lateinit var btnCallApi: Button
     private lateinit var rvMusicList: RecyclerView
+    lateinit var mediaPlayer: MediaPlayer
+
 
     companion object {
         const val DISPLAY_MUSIC = "DISPLAY_MUSIC"
@@ -70,7 +73,16 @@ class MusicFragment : Fragment() {
 
     private fun updateAdapter(dataSet: MusicResponse) {
         Log.d(TAG, "updateAdapter: update Adapter")
+        mediaPlayer = MediaPlayer()
         binding.rvMusicResult.adapter = MusicAdapter(parseListMusicInfo(dataSet)){
+
+            mediaPlayer.setVolume(1F,1F)
+            mediaPlayer.reset()
+            mediaPlayer.setDataSource(it.previewUrl)
+            mediaPlayer.prepare()
+            mediaPlayer.start()
+
+
         }
     }
 
@@ -81,7 +93,7 @@ class MusicFragment : Fragment() {
             musicItem.artworkUrl60,
             musicItem.trackPrice,
             musicItem.currency,
-            musicItem.preview
+            musicItem.previewUrl
         ) }
     }
 
