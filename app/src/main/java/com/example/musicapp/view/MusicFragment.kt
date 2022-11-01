@@ -1,7 +1,9 @@
 package com.example.musicapp.view
 
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.example.musicapp.databinding.MusicFragmentLayoutBinding
 import com.example.musicapp.model.remote.MusicItem
 import com.example.musicapp.model.remote.MusicResponse
 import com.example.musicapp.view.adapter.MusicAdapter
+
 
 class MusicFragment : Fragment() {
 
@@ -56,14 +59,21 @@ class MusicFragment : Fragment() {
     }
 
     private fun updateAdapter(dataSet: MusicResponse) {
-        mediaPlayer = MediaPlayer()
         binding.rvMusicResult.adapter = MusicAdapter(parseListMusicInfo(dataSet)) {
-            mediaPlayer.setVolume(1F, 1F)
-            mediaPlayer.reset()
-            mediaPlayer.setDataSource(it.previewUrl)
-            mediaPlayer.prepare()
-            mediaPlayer.start()
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            intent.setDataAndType(Uri.parse(it.previewUrl), "audio/*")
+            startActivity(intent)
         }
+//region Media Player
+//        mediaPlayer = MediaPlayer()
+//        binding.rvMusicResult.adapter = MusicAdapter(parseListMusicInfo(dataSet)) {
+//            mediaPlayer.setVolume(1F, 1F)
+//            mediaPlayer.reset()
+//            mediaPlayer.setDataSource(it.previewUrl)
+//            mediaPlayer.prepare()
+//            mediaPlayer.start()
+//endregion      }
     }
 
     private fun parseListMusicInfo(dataSet: MusicResponse): List<MusicItem> {
